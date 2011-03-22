@@ -3,6 +3,14 @@
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+# A set of characters used for converting object IDs
+# to the base N strings
+BASE_N_ALPHABET = '0123456789abcdefghjkmnopqrstuvwxyz'
+
+# An offset which is added to an object ID
+# before converting it to a base N string
+BASE_N_OFFSET = 1200
+
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
 )
@@ -89,6 +97,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
+    'tc',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

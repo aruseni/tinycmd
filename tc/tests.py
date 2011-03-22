@@ -1,23 +1,22 @@
-"""
-This file demonstrates two different styles of tests (one doctest and one
-unittest). These will both pass when you run "manage.py test".
-
-Replace these with more appropriate tests for your application.
-"""
-
 from django.test import TestCase
+from django.conf import settings
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
+from tc.models import CommandString
+
+from tc.basenencode import baseNencode
+
+class TestCommandStringModel(TestCase):
+    def setUp(self):
+        self.cs = CommandString.objects.create()
+
+    def test_string_id(self):
         """
-        Tests that 1 + 1 always equals 2.
+        Tests that the string_id is added to the object correctly.
         """
-        self.failUnlessEqual(1 + 1, 2)
+        string_id = baseNencode(self.cs.id+settings.BASE_N_OFFSET, settings.BASE_N_ALPHABET)
+        # Reload the object to get the string_id added by the save() method
+        cs = CommandString.objects.get(id=self.cs.id)
+        self.assertEqual(string_id, cs.string_id)
 
-__test__ = {"doctest": """
-Another way to test that 1 + 1 is equal to 2.
-
->>> 1 + 1 == 2
-True
-"""}
-
+    def tearDown(self):
+        self.cs.delete()
