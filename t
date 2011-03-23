@@ -11,21 +11,30 @@ The command string shortening service.
 
 Usage: t [options] [command_string_id]
 Options:
-    -h, --help, --usage  -  show this help
-    -s, --show           -  show real commands for command_string_id
+    -h, --help, --usage   -  show this help
+    -s [id], --show [id]  -  show real commands for command_string_id
 """
 
 import os, sys
 import socket
 if sys.version_info[0] == 2:
     import httplib
-else:
+elif sys.version_info[0] == 3:
     from http import client as httplib
 
+argv_count = len(sys.argv)
+
 if any([i in sys.argv for i in ('--usage', '--help', '-h')]) or \
-   len(sys.argv) == 1 or sys.argv[-1].startswith("-"):
+   argv_count < 2 or argv_count > 3:
     print(usage)
     sys.exit(1)
+
+if argv_count == 3:
+    if not sys.argv[1] in ('--usage', '--help', '-h',
+                           '-s', '--show'):
+        print(usage)
+        sys.exit(1)
+
 try:
     conn = httplib.HTTPConnection(tinycmd_host)
 
