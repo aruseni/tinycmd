@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>tinycmd — the command strings shortening service</title>
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <style type="text/css">
+body {
+    font-size: 14px;
+    font-family: arial, helvetica, sans-serif;
+    color: #fff;
+    background-color: #000;
+    background-image: url('background.jpg');
+    background-repeat: no-repeat;
+    background-position: 50% 25%;
+}
+
+html, body{
+    margin:0;
+    padding:0;
+    height:100%;
+    border:none
+}
+
+a, a:link {
+    font-weight: bold;
+    color: #000;
+}
+
+a:visited {
+    font-weight: bold;
+    color: #444;
+}
+
+img {
+    border: 0;
+}
+
+div.content {
+    width: 800px;
+}
+
+div.about {
+    float: left;
+    width: 400px;
+    color: #fff;
+    background-color: rgba(0,0,0,.7);
+    margin: 15px;
+    padding: 5px 10px 5px 10px;
+}
+
+div.installation, div.add_command_string {
+    float: left;
+    width: 300px;
+    color: #fff;
+    background-color: rgba(0,0,0,.7);
+    margin: 15px;
+    padding: 5px 10px 5px 10px;
+}
+
+div.command_string {
+    width: 600px;
+    color: #fff;
+    background-color: rgba(0,0,0,.7);
+    margin: 15px;
+    padding: 5px 10px 5px 10px;
+}
+
+input {
+   color: #ccc;
+   background-color: rgba(0,0,0,.3);
+   border: 1px solid #444;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+textarea {
+   margin-top: 12px;
+   background-color: rgba(0,0,0,.1);
+   color: #fff;
+   border: 1px solid #555;
+}
+    </style>
+</head>
+<body>
+<div><img src="/static/tinycmd.png" alt="tinycmd"></div>
+<div class="content">
+{% block content %}
+{% endblock %}
+</div>
+</body>
+</html>

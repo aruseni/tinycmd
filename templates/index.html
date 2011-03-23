@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="about">
+<h1>Why to use tinycmd?</h1>
+
+<p>Have you ever been in situation where you wanted to <span class="bold">help a friend or relative</span> to install or configure something on their computer, but they didn’t really have a computer background?</p>
+
+<p>If you did it, you know that in many cases it is not simple in the graphical interface, as you have to imagine another person’s desktop, which can greatly vary on different computers.</p>
+
+<p>In these cases, it is much simpler to just ask the person to open up a terminal window and <span class="bold">type a command string</span>. However, will it be easy for the person without a computer background to type what you say?</p>
+
+<p>If you use phone, it can be hard for them to find the <span class="bold">special characters</span> on the keyboard, and they can also put <span class="bold">whitespaces</span> in the wrong places of the command string.</p>
+
+<p>When using text, in another hand, it can be necessary to first explain them how the <span class="bold">clipboard</span> works (and how they can copy the command string), and to then understand why the command is not working correctly (they can, for example, copy everything except the last character of the string).</p>
+
+<p>The solution is to use command string shortening — <span class="bold">tinycmd</span>.</p>
+
+<p>You can <span class="bold">simply save your command</span> right here, and then, for running it (if tinycmd is installed on the computer), the person just needs to type this in the terminal and press return:</p>
+
+<p class="bold">t zx48v7</p>
+
+<p>Where <span class="bold">t</span> is the tinycmd command and <span class="bold">zx48v7</span> is an unique shortcut for the command.</p>
+
+<p>You can also use it for <span class="bold">presentations</span> and <span class="bold">master classes</span>, or if you need to use a piece of paper to write a manual for someone.</p>
+</div>
+<div class="installation">
+<h1>Installation</h1>
+
+<p>Before using tinycmd, install it to your computer.</p>
+
+<p><small>(Installation is required only for running commands, saving them on this site is available without installation).</small></p>
+
+<p>The installation is as simple as:</p>
+
+<p class="bold">wget http://tinycmd.org/t && chmod 755 t && sudo mv t /usr/local/bin/</p>
+</div>
+<div class="add_command_string">
+<p>Write a command string below, then press the “Save” button to create a shortcut.</p>
+<form action="/post/">
+<p><textarea name="command" cols="35" rows="5"></textarea></p>
+<p><input type="submit" value="Save"></p>
+</form>
+</div>
+{% endblock %}
