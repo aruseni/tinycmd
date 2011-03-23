@@ -37,7 +37,8 @@
 </div>
 <div class="add_command_string">
 <p>Write a command string below, then press the “Save” button to create a shortcut.</p>
-<form action="/post/">
+<form action="{% url tc.views.add_command_string %}" method="post">
+{% csrf_token %}
 <p><textarea name="command" cols="35" rows="5"></textarea></p>
 <p><input type="submit" value="Save"></p>
 </form>
