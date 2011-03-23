@@ -10,7 +10,7 @@ body {
     font-family: arial, helvetica, sans-serif;
     color: #fff;
     background-color: #000;
-    background-image: url('background.jpg');
+    background-image: url('/static/background.jpg');
     background-repeat: no-repeat;
     background-position: 50% 25%;
 }
@@ -85,7 +85,7 @@ textarea {
     </style>
 </head>
 <body>
-<div><img src="/static/tinycmd.png" alt="tinycmd"></div>
+<div><a href="{% url tc.views.index %}"><img src="/static/tinycmd.png" alt="tinycmd"></a></div>
 <div class="content">
 {% block content %}
 {% endblock %}
