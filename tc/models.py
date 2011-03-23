@@ -31,3 +31,6 @@ for the new objects and still leave the old IDs working.
         if not self.string_id:
             string_id = baseNencode(self.id+settings.BASE_N_OFFSET, settings.BASE_N_ALPHABET)
             CommandString.objects.filter(id=self.id).update(string_id=string_id)
+
+    def __unicode__(self):
+        return self.string_id
