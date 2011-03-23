@@ -2,7 +2,8 @@
 
 {% block content %}
 <div class="command_string">
-<p class="bold">{{ command_string.datetime_added }}</p>
+<p class="datetime">{{ command_string.datetime_added }}</p>
+<p class="how_to_run">To run this command, type: <span class="bold">t {{ command_string.string_id }}</span></p>
 <p>{{ command_string.command_string }}</p>
 </div>
 {% endblock %}

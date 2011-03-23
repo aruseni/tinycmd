@@ -28,5 +28,6 @@ it becomes possible to then change the ID generation scheme
 for the new objects and still leave the old IDs working.
         """
         super(CommandString, self).save(*args, **kwargs) # Call the "real" save() method.
-        string_id = baseNencode(self.id+settings.BASE_N_OFFSET, settings.BASE_N_ALPHABET)
-        CommandString.objects.filter(id=self.id).update(string_id=string_id)
+        if not self.string_id:
+            string_id = baseNencode(self.id+settings.BASE_N_OFFSET, settings.BASE_N_ALPHABET)
+            CommandString.objects.filter(id=self.id).update(string_id=string_id)
