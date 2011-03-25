@@ -4,7 +4,6 @@ from __future__ import print_function
 
 # Config:
 tinycmd_host = "tinycmd.org" # The web server host
-tinycmd_host = "localhost:8000" # The web server host
 tinycmd_user = ""            # user on tinycmd_host
 
 
