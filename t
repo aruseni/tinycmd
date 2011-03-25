@@ -67,8 +67,8 @@ if __name__ == "__main__":
             try: 
                 conn = httplib.HTTPConnection(options.host) 
                 conn.request("GET", user + "/list/text/")    
-        except (httplib.HTTPResponse, socket.error) as ex:
-            opt.exit(1, "Unable to connect to the server:" + str(ex))
+            except (httplib.HTTPResponse, socket.error) as ex:
+                opt.exit(1, "Unable to connect to the server:" + str(ex))
         r1 = conn.getresponse()
         if r1.status == 404: 
             print("Command string not found.")
@@ -95,7 +95,7 @@ if __name__ == "__main__":
     for arg in args:
         data = None
         cachefn = os.path.join(cachedir, arg)
-            if os.path.exists(cachefn): data = open(cachefn).read()
+        if os.path.exists(cachefn): data = open(cachefn).read()
         else:
             try: conn.request("GET", user + "/cs/" + arg + "/text/")    
             except (httplib.HTTPResponse, socket.error) as ex:
