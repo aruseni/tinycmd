@@ -105,12 +105,12 @@ if __name__ == "__main__":
 			data = r1.read()
 			print("Command: ")
 			print(data)
-			if option.showonly:
+			if options.showonly:
 				exit(0)    
 			else:
 				allow_run = True
 				if not options.noquestions:
-					answer = raw_input("You are really want run this command?")
+					answer = raw_input("You are really want run this command [y|n]? Answer: ")
 					allow_run = answer[0].lower() == 'y'
 				if allow_run:
 					os.system(data)
