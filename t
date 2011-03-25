@@ -95,7 +95,8 @@ if __name__ == "__main__":
     for arg in args:
         data = None
         cachefn = os.path.join(cachedir, arg)
-        if os.path.exists(cachefn): data = open(cachefn).read()
+        if os.path.exists(cachefn) and not options.nocache: 
+        	data = open(cachefn).read()
         else:
             try: conn.request("GET", user + "/cs/" + arg + "/text/")    
             except (httplib.HTTPResponse, socket.error) as ex:
@@ -107,8 +108,9 @@ if __name__ == "__main__":
                 print("The server gives the 500 error. Please try again later.")
             elif r1.status == 200:
                 data = r1.read()
-                if not os.path.exists(cachedir): os.makedirs(cachedir)
-                with open(cachefn, "w+") as cachefile: cachefile.write(data)
+                if not options.nocache:
+                	if not os.path.exists(cachedir): os.makedirs(cachedir)
+                	with open(cachefn, "w+") as cachefile: cachefile.write(data)
         if data:
             print("Command: ")
             print(data)
