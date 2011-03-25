@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% for cmd in cmdlist %}
+<div class="command_string">
+    <p class="datetime">{{ cmd.datetime_added }}</p>
+    <p class="how_to_run">ID: <span class="bold">{{ cmd.string_id }}</span></p>
+    <p>{{ cmd.command_string }}</p>
+</div>
+{% endfor %}
+{% endblock %}

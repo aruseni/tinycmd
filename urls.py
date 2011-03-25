@@ -19,4 +19,5 @@ urlpatterns = patterns('',
         {'document_root': settings.MEDIA_ROOT}),
 
     (r'^', include('tc.urls')),
+
 )

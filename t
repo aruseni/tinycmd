@@ -4,6 +4,7 @@ from __future__ import print_function
 
 # Config:
 tinycmd_host = "tinycmd.org" # The web server host
+tinycmd_host = "localhost:8000" # The web server host
 tinycmd_user = ""            # user on tinycmd_host
 
 
@@ -22,7 +23,7 @@ __prog__        = "tinycmd"
 __version__     = "0.1"
 __website__     = "http://tinycmd.org"
 __description__ = "  tinycmd.org  -  The command string shortening service."
-__usage__       = "%prog [options] [command_string_id]" 
+__usage__       = "%prog [options] [command_string_id_list]" 
 
 
 if __name__ == "__main__":
@@ -62,9 +63,20 @@ if __name__ == "__main__":
 	if options.listcmd:
 		if not options.user:
 			opt.exit(1, "List of command may be showed only for concrete user")
-		# =============================
-		# list-command-code will be here
-		# =============================
+	    	user = "/" + options.user if options.user else ""
+	    	try: 
+	        	conn = httplib.HTTPConnection(options.host) 
+	        	conn.request("GET", user + "/list/text/")    
+		except (httplib.HTTPResponse, socket.error) as ex:
+			opt.exit(1, "Unable to connect to the server:" + str(ex))
+		r1 = conn.getresponse()
+		if r1.status == 404: 
+			print("Command string not found.")
+		elif r1.status == 500:
+			print("The server gives the 500 error. Please try again later.")
+		elif r1.status == 200:
+			print(r1.read())
+		conn.close()
 		exit(0)
     
 	if len(args) == 0:

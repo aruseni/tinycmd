@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.auth.models import User
 
 from basenencode import baseNencode
 
@@ -8,6 +9,7 @@ from basenencode import baseNencode
 class CommandString(models.Model):
     command_string = models.TextField()
     datetime_added = models.DateTimeField(auto_now_add=True)
+    user_added = models.ForeignKey(User, null=True, blank=True)
     # When the super() first saves the object,
     # it creates and gets an ID, but
     # it doesn't yet have a string_id
@@ -24,7 +26,7 @@ convert the object id to a base N string and then
 update the string_id field with the returned value.
 
 As an ID is generated when a new command string is saved,
-it becomes possible to then change the ID generation scheme
+it becomes possible to then change the ID generation scheme:
 for the new objects and still leave the old IDs working.
         """
         super(CommandString, self).save(*args, **kwargs) # Call the "real" save() method.

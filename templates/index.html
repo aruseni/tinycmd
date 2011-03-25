@@ -36,11 +36,26 @@
 <p class="bold">wget http://tinycmd.org/t && chmod 755 t && sudo mv t /usr/local/bin/</p>
 </div>
 <div class="add_command_string">
+{% if user.is_authenticated %}
+You: <span class="bold">{{ user.username }}</span> | <a href="/{{ user.username }}/list/">List</a> | <a href="/accounts/logout/">Sign out</a>
+{% else %}
+<form action="/accounts/login/" method="post">
+{% csrf_token %}
+<p><label>Username:</label><input type="text" name="username" value="" id="username" size=44></p>
+<p><label>Password: </label><input type="password" name="password" value="" id="password" size=44></p>
+<p><input type="submit" value="Sign in" /> <a href="">Sign up</a></p>
+</form>
+{% endif %}
+</div>
+<div class="add_command_string">
 <p>Write a command string below, then press the “Save” button to create a shortcut.</p>
 <form action="{% url tc.views.add_command_string %}" method="post">
 {% csrf_token %}
-<p><textarea name="command" cols="35" rows="5"></textarea></p>
-<p><input type="submit" value="Save"></p>
+{% if user.is_authenticated %}
+<p><label>ID: <input type="text" name="cmdid" size=44></label></p>
+{% endif %}
+<p><label>Command: <textarea name="command" cols="35" rows="5"></textarea></label></p>
+<p><input type="submit" value="Save"> <a href="/list/">List</a></p>
 </form>
 </div>
 {% endblock %}
