@@ -18,7 +18,7 @@ def login(request):
         auth.login(request, user)
         return HttpResponseRedirect("/")
     else:
-        return HttpResponseRedirect("/account/invalid/")
+        return HttpResponseRedirect("/")
 
 def logout(request):
     auth.logout(request)
@@ -52,17 +52,25 @@ def user_command_string_text(request, username, command_string_id):
 
 def add_command_string(request):
     command_string_string = request.POST.get('command', '')
-    cmdid = request.POST.get('cmdid', '')
-    if not command_string_string:
-        return HttpResponseRedirect(reverse('tc.views.index'))
-    command_string = CommandString()
-    command_string.command_string = command_string_string
-    if request.user.is_authenticated():
-        command_string.user_added = request.user
-        command_string.string_id = cmdid
-    command_string.save()
-    # Reload the object to get the string_id added by the save() method
-    command_string = CommandString.objects.get(id=command_string.id)
+    try:
+        command_string = CommandString.objects.get(command_string=command_string_string, 
+                                                   user_added=request.user)
+    except CommandString.DoesNotExist:
+        cmdid = request.POST.get('cmdid', '')
+        try:
+            command_string = CommandString.objects.get(string_id=cmdid, 
+                                                      user_added=request.user)
+        except CommandString.DoesNotExist:
+            if not command_string_string:
+                return HttpResponseRedirect(reverse('tc.views.index'))
+            command_string = CommandString()
+            command_string.command_string = command_string_string
+            if request.user.is_authenticated():
+                command_string.user_added = request.user
+                command_string.string_id = cmdid
+            command_string.save()
+            # Reload the object to get the string_id added by the save() method
+            command_string = CommandString.objects.get(id=command_string.id)
     if request.user.is_authenticated():
         return HttpResponseRedirect(reverse('tc.views.user_command_string_detail', 
                                             args=(request.user.username,
