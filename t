@@ -6,7 +6,6 @@ from __future__ import print_function
 tinycmd_host = "tinycmd.org" # The web server host
 tinycmd_user = ""            # user on tinycmd_host
 
-
 import os, sys
 import socket
 import optparse
@@ -45,6 +44,8 @@ if __name__ == "__main__":
 	               help="Add this script to tinycmd-server", type="string")
 	opt.add_option("-l", "--listcmd", dest="listcmd", default=False, 
 	               action="store_true", help="List commands for current user")
+	opt.add_option("-n", "--nocache", dest="nocache", default=False, 
+	               action="store_true", help="Don't use cache")
 	(options, args) = opt.parse_args()
 
     	# add command to server
@@ -84,25 +85,31 @@ if __name__ == "__main__":
 		print(opt.get_description(),"\n")
 		print(opt.format_option_help())
 		exit(1)
-
+    
 	user = "/" + options.user if options.user else ""
 	try: conn = httplib.HTTPConnection(options.host) 
 	except (httplib.HTTPResponse, socket.error) as ex:
 		opt.exit(1, "Unable to connect to the server:" + str(ex))
 
+	cachedir = os.path.join(os.getenv("HOMEPATH"), ".tinycmd/")
 	for arg in args:
-		
-		try: conn.request("GET", user + "/cs/" + arg + "/text/")    
-		except (httplib.HTTPResponse, socket.error) as ex:
-			opt.exit(1, "Unable to connect to the server:" + str(ex))
-	
-		r1 = conn.getresponse()
-		if r1.status == 404: 
-			print("Command string not found.")
-		elif r1.status == 500:
-			print("The server gives the 500 error. Please try again later.")
-		elif r1.status == 200:
-			data = r1.read()
+		data = None
+		cachefn = os.path.join(cachedir, arg)
+        	if os.path.exists(cachefn): data = open(cachefn).read()
+		else:
+			try: conn.request("GET", user + "/cs/" + arg + "/text/")    
+			except (httplib.HTTPResponse, socket.error) as ex:
+				opt.exit(1, "Unable to connect to the server:" + str(ex))
+			r1 = conn.getresponse()
+			if r1.status == 404: 
+				print("Command string not found.")
+			elif r1.status == 500:
+				print("The server gives the 500 error. Please try again later.")
+			elif r1.status == 200:
+				data = r1.read()
+				if not os.path.exists(cachedir): os.makedirs(cachedir)
+				with open(cachefn, "w+") as cachefile: cachefile.write(data)
+		if data:
 			print("Command: ")
 			print(data)
 			if options.showonly:
@@ -111,7 +118,7 @@ if __name__ == "__main__":
 				allow_run = True
 				if not options.noquestions:
 					answer = raw_input("You are really want run this command [y|n]? Answer: ")
-					allow_run = answer[0].lower() == 'y'
+					allow_run = answer[0].lower() == 'y' if answer else False
 				if allow_run:
 					os.system(data)
 	
