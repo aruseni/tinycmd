@@ -41,12 +41,14 @@ if __name__ == "__main__":
 	               metavar="SERVER")
 	opt.add_option("-a", "--addcmd", dest="addcmd", metavar="COMMAND", 
 	               help="Add this command to tinycmd-server", type="string")
+	opt.add_option("-f", "--addfile", dest="addfile", metavar="FILE", 
+	               help="Add this script to tinycmd-server", type="string")
 	opt.add_option("-l", "--listcmd", dest="listcmd", default=False, 
 	               action="store_true", help="List commands for current user")
 	(options, args) = opt.parse_args()
 
     	# add command to server
-	if options.addcmd:
+	if options.addcmd or options.addfile:
 		if len(args) > 1:
 			opt.exit(1, "Wrong count of arguments")
 		user = options.user
@@ -72,14 +74,14 @@ if __name__ == "__main__":
 		print(opt.format_option_help())
 		exit(1)
 
-	user = options.user + "/" if options.user else ""
+	user = "/" + options.user if options.user else ""
 	try: conn = httplib.HTTPConnection(options.host) 
 	except (httplib.HTTPResponse, socket.error) as ex:
 		opt.exit(1, "Unable to connect to the server:" + str(ex))
 
 	for arg in args:
 		
-		try: conn.request("GET", "/cs/" + user + arg + "/text/")    
+		try: conn.request("GET", user + "/cs/" + arg + "/text/")    
 		except (httplib.HTTPResponse, socket.error) as ex:
 			opt.exit(1, "Unable to connect to the server:" + str(ex))
 	
