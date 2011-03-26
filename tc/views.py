@@ -54,12 +54,14 @@ def add_command_string(request):
     command_string_string = request.POST.get('command', '')
     try:
         command_string = CommandString.objects.get(command_string=command_string_string, 
-                                                   user_added=request.user)
+                                                   user_added=request.user if \
+                                                   request.user.is_authenticated() else None)
     except CommandString.DoesNotExist:
         cmdid = request.POST.get('cmdid', '')
         try:
             command_string = CommandString.objects.get(string_id=cmdid, 
-                                                      user_added=request.user)
+                                                       user_added=request.user \
+                                                       if request.user.is_authenticated() else None)
         except CommandString.DoesNotExist:
             if not command_string_string:
                 return HttpResponseRedirect(reverse('tc.views.index'))
@@ -81,22 +83,22 @@ def add_command_string(request):
         
 
 def command_list(request):
-    cmdlist = CommandString.objects.filter(user_added=None).order_by('datetime_added')
+    cmdlist = CommandString.objects.order_by('-datetime_added')
     return render_to_response('command_list.html', {'cmdlist': cmdlist}, 
                               context_instance=RequestContext(request))
 
 def user_command_list(request, username):
     user = User.objects.get(username=username)
-    cmdlist = CommandString.objects.filter(user_added=user).order_by('datetime_added')
+    cmdlist = CommandString.objects.filter(user_added=user).order_by('-datetime_added')
     return render_to_response('command_list.html', {'cmdlist': cmdlist}, 
                               context_instance=RequestContext(request))
 
 def command_list_text(request):
-    cmdlist = CommandString.objects.filter(user_added=None).order_by('datetime_added')
+    cmdlist = CommandString.objects.order_by('-datetime_added')
     return HttpResponse('\n'.join(map(lambda s: s.string_id, cmdlist)))
 
 def user_command_list_text(request, username):
     user = User.objects.get(username=username)
-    cmdlist = CommandString.objects.filter(user_added=user).order_by('datetime_added')
+    cmdlist = CommandString.objects.filter(user_added=user).order_by('-datetime_added')
     return HttpResponse('\n'.join(map(lambda s: s.string_id, cmdlist)))
 

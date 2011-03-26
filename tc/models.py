@@ -10,6 +10,7 @@ class CommandString(models.Model):
     command_string = models.TextField()
     datetime_added = models.DateTimeField(auto_now_add=True)
     user_added = models.ForeignKey(User, null=True, blank=True)
+    votes = models.FloatField(default=0.0)
     # When the super() first saves the object,
     # it creates and gets an ID, but
     # it doesn't yet have a string_id
@@ -31,6 +32,7 @@ for the new objects and still leave the old IDs working.
         """
         super(CommandString, self).save(*args, **kwargs) # Call the "real" save() method.
         if not self.string_id:
+            # TODO: Need new algorithm!!!!!!!!!!!!!!!
             string_id = baseNencode(self.id+settings.BASE_N_OFFSET, settings.BASE_N_ALPHABET)
             CommandString.objects.filter(id=self.id).update(string_id=string_id)
 
