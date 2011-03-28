@@ -67,6 +67,7 @@ def user_command_string_text(request, username, command_string_id):
 
 def add_command_string(request):
     command_string_string = request.POST.get('command', '')
+    only_num = request.POST.get('only_num')
     try:
         command_string = CommandString.objects.get(command_string=command_string_string, 
                                                    user_added=request.user if \
@@ -85,7 +86,7 @@ def add_command_string(request):
             if request.user.is_authenticated():
                 command_string.user_added = request.user
                 command_string.string_id = cmdid
-            command_string.save()
+            command_string.save(only_num=only_num)
             # Reload the object to get the string_id added by the save() method
             command_string = CommandString.objects.get(id=command_string.id)
     if request.user.is_authenticated():

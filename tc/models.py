@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
-
+from string import digits
 from basenencode import baseNencode
 
 # Create your models here.
@@ -20,7 +20,7 @@ class CommandString(models.Model):
     # method next adds it.
     string_id = models.CharField(max_length=255, blank=True, editable=False)
 
-    def save(self, *args, **kwargs):
+    def save(self, only_num=False, *args, **kwargs):
         """
 Check if a string_id is already set, and if it's not,
 convert the object id to a base N string and then
@@ -33,7 +33,8 @@ for the new objects and still leave the old IDs working.
         super(CommandString, self).save(*args, **kwargs) # Call the "real" save() method.
         if not self.string_id:
             # TODO: Need new algorithm!!!!!!!!!!!!!!!
-            string_id = baseNencode(self.id+settings.BASE_N_OFFSET, settings.BASE_N_ALPHABET)
+            string_id = baseNencode(self.id + settings.BASE_N_OFFSET, 
+                                    digits if only_num else settings.BASE_N_ALPHABET)
             CommandString.objects.filter(id=self.id).update(string_id=string_id)
 
     def __unicode__(self):

@@ -52,9 +52,11 @@ You: <span class="bold">{{ user.username }}</span> | <a href="/{{ user.username 
 <p>Write a command string below, then press the “Save” button to create a shortcut.</p>
 <form action="{% url tc.views.add_command_string %}" method="post">
 {% csrf_token %}
+<p>
 {% if user.is_authenticated %}
-<p><label>ID: <input type="text" name="cmdid" size=44></label></p>
+<label>ID: <input type="text" name="cmdid" size=44></label>
 {% endif %}
+<label><input type="checkbox" name="only_num">Use only digits in shortcut</label></p>
 <p><label>Command: <textarea name="command" cols="35" rows="5"></textarea></label></p>
 <p><input type="submit" value="Save"> <a href="/list/">List</a></p>
 </form>
