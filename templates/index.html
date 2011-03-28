@@ -44,7 +44,7 @@ You: <span class="bold">{{ user.username }}</span> | <a href="/{{ user.username 
 {% csrf_token %}
 <p><label>Username:</label><input type="text" name="username" value="" id="username" size=44></p>
 <p><label>Password: </label><input type="password" name="password" value="" id="password" size=44></p>
-<p><input type="submit" value="Sign in" /> <a href="">Sign up</a></p>
+<p><input type="submit" value="Sign in" /> <a href="/accounts/register/">Sign up</a></p>
 </form>
 {% endif %}
 </div>

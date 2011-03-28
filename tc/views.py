@@ -2,19 +2,21 @@
 
 
 from django.contrib import auth
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from tc.models import CommandString
+from django import forms
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.contrib.auth.models import User
-from tc.models import CommandString
 
 
 def login(request):
     username = request.POST['username']
     password = request.POST['password']
     user = auth.authenticate(username=username, password=password)
-    if user is not None and user.is_active:
+    if user and user.is_active:
         auth.login(request, user)
         return HttpResponseRedirect("/")
     else:
@@ -23,6 +25,19 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return HttpResponseRedirect("/")
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+        	username = request.POST['username']
+        	password = request.POST['password1']
+        	new_user = form.save()
+        	user = auth.authenticate(username=username, password=password)
+        	if user and user.is_active: auth.login(request, user)
+        	return HttpResponseRedirect("/")
+    else: form = UserCreationForm()
+    return render_to_response("register.html", {'form': form,})
 
 def index(request):
     return render_to_response('index.html', {},
@@ -101,4 +116,5 @@ def user_command_list_text(request, username):
     user = User.objects.get(username=username)
     cmdlist = CommandString.objects.filter(user_added=user).order_by('-datetime_added')
     return HttpResponse('\n'.join(map(lambda s: s.string_id, cmdlist)))
+
 
