@@ -15,9 +15,9 @@ The solution is to use command string shortening — tinycmd.
 
 You can simply save your command right here, and then, for running it (if tinycmd is installed on the computer), the person just needs to type this in the terminal and press return:
 
-    t zx48v7
+    t 2b3
 
-Where `t` is the tinycmd command and `zx48v7` is an unique shortcut for the command.
+Where `t` is the tinycmd command and `2b3` is an unique shortcut for the command.
 
 You can also use it for presentations and master classes, or if you need to use a piece of paper to write a manual for someone.
 

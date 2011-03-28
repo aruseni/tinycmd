@@ -18,7 +18,7 @@ else:
 
 
 __prog__        = "tinycmd"
-__version__     = "0.1"
+__version__     = "0.2"
 __website__     = "http://tinycmd.org"
 __description__ = "  tinycmd.org  -  The command string shortening service."
 __usage__       = "%prog [options] [command_string_id_list]" 
