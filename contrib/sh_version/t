@@ -1,0 +1,33 @@
+#!/bin/sh
+
+[ ! -f /usr/bin/wget ] && {
+    echo "wget not found. Please install wget first."
+    exit 2
+}
+
+die() {
+    echo "Usage: $0 [-s] code" >&2
+    exit 1
+}
+
+show_cmd() {
+    wget -q -O - http://tinycmd.org/cs/$1/text/
+}
+
+run_cmd() {
+    CMD=`show_cmd $1`
+    /bin/sh -c "$CMD"
+}
+
+[ $# -lt 1 -o $# -gt 2 ] && die
+[ $# -eq 2 -a "$1" != "-s" ] && die
+
+[ $# -eq 2 ] && {
+    show_cmd $2
+    echo
+} || {
+    run_cmd $1
+}
+
+exit 0
+# vim: ts=4 et
