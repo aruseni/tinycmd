@@ -1,4 +1,4 @@
-Why to use tinycmd?
+Why to use [tinycmd](http://tinycmd.org/)?
 =============
 
 Have you ever been in situation where you wanted to help a friend or relative to install or configure something on their computer, but they didn’t really have a computer background?
