@@ -49,7 +49,9 @@ div.about {
     padding: 5px 10px 5px 10px;
 }
 
-div.installation, div.add_command_string {
+div.installation,
+div.login,
+div.add_command_string {
     float: left;
     width: 300px;
     color: #fff;
@@ -74,10 +76,27 @@ div.register_form {
     padding: 5px 10px 5px 10px;
 }
 
+ div.add_command_string label {
+    display: block;
+}
+
 input {
    color: #ccc;
    background-color: rgba(0,0,0,.3);
    border: 1px solid #444;
+}
+
+input[type="text"],
+input[type="password"] {
+   width: 70%;
+}
+
+div.add_command_string input[type="text"] {
+   margin-bottom: 15px;
+}
+
+input[type="checkbox"] {
+   margin-left: 0;
 }
 
 .bold {
