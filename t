@@ -91,7 +91,7 @@ if __name__ == "__main__":
     except (httplib.HTTPResponse, socket.error) as ex:
         opt.exit(1, "Unable to connect to the server:" + str(ex))
 
-    cachedir = os.path.join(os.getenv("HOMEPATH"), ".tinycmd" + options.user + "/")
+    cachedir = os.path.join(os.path.expanduser("~"), ".tinycmd" + options.user + "/")
     for arg in args:
         data = None
         cachefn = os.path.join(cachedir, arg)
