@@ -11,7 +11,7 @@ die() {
 }
 
 show_cmd() {
-    wget -q -O - http://tinycmd.org/cs/$1/text/
+    wget -q -O - http://tinycmd.alwaysdata.net/cs/$1/text/
 }
 
 run_cmd() {

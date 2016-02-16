@@ -1,4 +1,4 @@
-Why use [tinycmd](http://tinycmd.org/)?
+Why use [tinycmd](http://tinycmd.alwaysdata.net/)?
 =============
 
 Have you ever been in a situation where you wanted to **help a friend or relative** install or configure something on their computer over the phone or through Email, but they didn’t have a background in computers?
